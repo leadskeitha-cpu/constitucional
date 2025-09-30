@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado - Direito Constitucional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .questao-area {
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .questao-container {
+            margin-bottom: 30px;
+        }
+
+        .questao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .questao-numero {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .questao-categoria {
+            font-size: 14px;
+            color: var(--gray);
+            background: var(--light);
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .enunciado {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .alternativa {
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .alternativa:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateX(5px);
+        }
+
+        .alternativa.selecionada {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .alternativa.correta {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .alternativa.incorreta {
+            border-color: var(--danger);
+            background: var(--danger);
+            color: white;
+        }
+
+        .alternativa-letra {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .alternativa.selecionada .alternativa-letra,
+        .alternativa.correta .alternativa-letra,
+        .alternativa.incorreta .alternativa-letra {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .explicacao-questao {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explicacao-questao h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navegacao {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3aa8d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e11570;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e0861b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .resultado-final {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .resultado-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .resultado-titulo {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .resultado-pontuacao {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--success);
+            margin: 20px 0;
+        }
+
+        .resultado-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .resultado-stat {
+            text-align: center;
+        }
+
+        .resultado-stat-numero {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .resultado-stat-label {
+            font-size: 16px;
+            color: var(--gray);
+        }
+
+        .acertos {
+            color: var(--success);
+        }
+
+        .erros {
+            color: var(--danger);
+        }
+
+        .nao-respondidas {
+            color: var(--warning);
+        }
+
+        .mensagem-motivacional {
+            font-style: italic;
+            margin: 20px 0;
+            color: var(--gray);
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navegacao {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .questao-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-gavel"></i> Simulado - Direito Constitucional</h1>
+                <p>30 questões sobre Classificações da Constituição e Direitos Humanos</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="questao-atual">1</div>
+                        <div class="stat-label">QUESTÃO ATUAL</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="total-questoes">30</div>
+                        <div class="stat-label">TOTAL</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="acertos">0</div>
+                        <div class="stat-label">ACERTOS</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="erros">0</div>
+                        <div class="stat-label">ERROS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progresso-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span>Progresso</span>
+                <span id="progresso-texto">1/30</span>
+            </div>
+        </div>
+
+        <!-- Área da Questão -->
+        <div class="questao-area">
+            <div id="area-questao"></div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="navegacao">
+            <button class="btn btn-danger" onclick="reiniciarSimulado()">
+                <i class="fas fa-redo"></i> Reiniciar
+            </button>
+            <button class="btn btn-warning" onclick="anteriorQuestao()" id="btn-anterior">
+                <i class="fas fa-arrow-left"></i> Anterior
+            </button>
+            <button class="btn btn-success" onclick="responderQuestao()" id="btn-responder">
+                <i class="fas fa-check"></i> Responder
+            </button>
+            <button class="btn btn-primary" onclick="proximaQuestao()" id="btn-proximo">
+                Próxima <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="btn btn-warning" onclick="finalizarSimulado()" id="btn-finalizar">
+                <i class="fas fa-flag-checkered"></i> Finalizar
+            </button>
+        </div>
+
+        <!-- Resultado Final -->
+        <div class="resultado-final" id="resultado-final">
+            <div class="resultado-content">
+                <h2 class="resultado-titulo"><i class="fas fa-trophy"></i> Resultado Final</h2>
+                <div class="resultado-pontuacao" id="pontuacao-final">0%</div>
+                <div class="mensagem-motivacional" id="mensagem-motivacional"></div>
+                <div class="resultado-stats">
+                    <div class="resultado-stat">
+                        <div class="resultado-stat-numero acertos" id="total-acertos">0</div>
+                        <div class="resultado-stat-label">Acertos</div>
+                    </div>
+                    <div class="resultado-stat">
+                        <div class="resultado-stat-numero erros" id="total-erros">0</div>
+                        <div class="resultado-stat-label">Erros</div>
+                    </div>
+                    <div class="resultado-stat">
+                        <div class="resultado-stat-numero nao-respondidas" id="total-nao-respondidas">0</div>
+                        <div class="resultado-stat-label">Não Respondidas</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="reiniciarSimulado()" style="margin-top: 20px;">
+                    <i class="fas fa-redo"></i> Fazer Novamente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFIGURAÇÃO DAS 30 QUESTÕES ==========
+        const questaoDados = [
+            {
+                id: 1,
+                categoria: "classificacao",
+                enunciado: "Segundo a classificação de Karl Loewenstein, uma Constituição que possui texto detalhado e formalmente perfeito, mas não se efetiva na prática, caracterizando um abismo entre o previsto e o real, é denominada:",
+                alternativas: [
+                    "A) Normativa",
+                    "B) Semântica", 
+                    "C) Nominalista",
+                    "D) Impositiva",
+                    "E) Programática"
+                ],
+                correta: 2,
+                explicacao: "CORRETA: C) Nominalista - Segundo Loewenstein, a Constituição Nominalista é aquela que existe formalmente mas não corresponde à realidade política do país, sendo uma 'constituição de fachada'."
+            },
+            {
+                id: 2,
+                categoria: "direitos",
+                enunciado: "A teoria das gerações de direitos humanos desenvolvida por Karel Vasak utiliza como metáfora base os ideais da Revolução Francesa. Sobre a quinta geração de direitos, conforme defendida por Paulo Bonavides, é CORRETO afirmar:",
+                alternativas: [
+                    "A) Refere-se aos direitos de solidariedade como o meio ambiente",
+                    "B) Compreende os direitos à democracia e ao pluralismo",
+                    "C) Abrange os direitos decorrentes da biotecnologia",
+                    "D) Trata do direito à paz internacional",
+                    "E) Engloba os direitos digitais e à internet"
+                ],
+                correta: 3,
+                explicacao: "CORRETA: D) Trata do direito à paz internacional - Paulo Bonavides defende que a quinta geração é o direito à paz, enquanto a quarta seria democracia/pluralismo e a sexta os direitos à água/informação."
+            },
+            {
+                id: 3,
+                categoria: "principios",
+                enunciado: "O princípio constitucional que veda a supressão ou redução de direitos fundamentais já consolidados, baseado no art. 30 da Declaração Universal dos Direitos Humanos e na doutrina de Gomes Canotilho, é conhecido como:",
+                alternativas: [
+                    "A) Princípio da Razoabilidade",
+                    "B) Proibição do Retrocesso Social", 
+                    "C) Mínimo Existencial",
+                    "D) Reserva do Possível",
+                    "E) Vedação do Confisco"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Proibição do Retrocesso Social - Este princípio impede que conquistas civilizatórias em matéria de direitos fundamentais sejam suprimidas arbitrariamente pelo legislador."
+            },
+            {
+                id: 4,
+                categoria: "classificacao", 
+                enunciado: "Uma Constituição que exige, para sua alteração, um processo legislativo mais solene e dificultoso do que o processo de alteração das leis ordinárias, sendo exemplo a CF/88 com seu art. 60, é classificada como:",
+                alternativas: [
+                    "A) Flexível",
+                    "B) Semirrígida",
+                    "C) Rígida",
+                    "D) Superrígida", 
+                    "E) Imutável"
+                ],
+                correta: 2,
+                explicacao: "CORRETA: C) Rígida - Constituições rígidas possuem processo de reforma mais dificultoso. A CF/88 é rígida, enquanto a superrígida teria cláusulas pétreas absolutamente imutáveis."
+            },
+            {
+                id: 5,
+                categoria: "classificacao",
+                enunciado: "A teoria da 'norma fundamental pura' (Grundnorm), que compreende a Constituição no plano do 'dever-ser' desvinculada de fundamentações sociológicas ou políticas, foi desenvolvida por:",
+                alternativas: [
+                    "A) Hans Kelsen",
+                    "B) Georg Jellinek", 
+                    "C) Norberto Bobbio",
+                    "D) Karl Loewenstein",
+                    "E) Robert Alexy"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Hans Kelsen - Kelsen é o principal expoente da teoria pura do direito, defendendo a Constituição como norma fundamental desvinculada de outros fundamentos."
+            },
+            {
+                id: 6,
+                categoria: "direitos",
+                enunciado: "No âmbito da teoria dos status de Georg Jellinek, a posição do indivíduo que tem o direito de participar ativamente da formação da vontade estatal, através do exercício de direitos políticos, corresponde ao:",
+                alternativas: [
+                    "A) Status positivus",
+                    "B) Status negativus", 
+                    "C) Status activus",
+                    "D) Status passivus", 
+                    "E) Status subjectionis"
+                ],
+                correta: 2,
+                explicacao: "CORRETA: C) Status activus - É a posição ativa do indivíduo perante o Estado, com direito de participar da formação da vontade estatal através do voto e outros mecanismos democráticos."
+            },
+            {
+                id: 7,
+                categoria: "documentos",
+                enunciado: "Considerada a primeira constituição social do mundo, que incorporou pioneiramente direitos trabalhistas e sociais em seu texto, servindo de modelo para a Constituição brasileira de 1934:",
+                alternativas: [
+                    "A) Constituição de Weimar",
+                    "B) Constituição Mexicana de 1917",
+                    "C) Carta Magna de 1215", 
+                    "D) Constituição dos EUA",
+                    "E) Constituição Francesa de 1791"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Constituição Mexicana de 1917 - Foi a primeira a incorporar direitos sociais e trabalhistas, influenciada pela Revolução Mexicana, precedendo até mesmo a Constituição de Weimar."
+            },
+            {
+                id: 8,
+                categoria: "principios",
+                enunciado: "A tensão entre as limitações orçamentárias do Estado (reserva do possível) e o conjunto de bens materiais e imateriais indispensáveis para uma vida digna (mínimo existencial) constitui uma das discussões mais relevantes no:",
+                alternativas: [
+                    "A) Direito Constitucional Contemporâneo",
+                    "B) Direito Administrativo",
+                    "C) Direito Financeiro", 
+                    "D) Direito Tributário",
+                    "E) Direito Civil"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Direito Constitucional Contemporâneo - Esta discussão é central no direito constitucional atual, envolvendo a efetivação dos direitos sociais frente às restrições orçamentárias."
+            },
+            {
+                id: 9,
+                categoria: "principios",
+                enunciado: "No caso Riggs vs. Palmer (1889), o tribunal de Nova York decidiu que o herdeiro que assassinou o testador não poderia receber a herança, estabelecendo o princípio de que:",
+                alternativas: [
+                    "A) Ninguém pode se beneficiar do próprio ilícito",
+                    "B) A vontade do testador é soberana",
+                    "C) O direito à vida prevalece sobre o direito patrimonial", 
+                    "D) A boa-fé objeticava deve prevalecer",
+                    "E) O ordenamento rejeita o enriquecimento sem causa"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Ninguém pode se beneficiar do próprio ilícito - Este é o princípio estabelecido no caso, demonstrando um conflito entre direito à herança e direito à vida."
+            },
+            {
+                id: 10,
+                categoria: "direitos",
+                enunciado: "O dispositivo constitucional que estabelece a base legal para os direitos fundamentais atípicos, reconhecendo que os direitos expressos não excluem outros decorrentes do regime constitucional, é:",
+                alternativas: [
+                    "A) Art. 5º, §2º da CF/88",
+                    "B) Art. 60, §4º da CF/88", 
+                    "C) Art. 1º, III da CF/88",
+                    "D) Art. 3º, IV da CF/88",
+                    "E) Art. 170 da CF/88"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Art. 5º, §2º da CF/88 - Este dispositivo é conhecido como 'cláusula de abertura material' e fundamenta o reconhecimento de direitos fundamentais implícitos."
+            },
+            {
+                id: 11,
+                categoria: "classificacao",
+                enunciado: "A Constituição que pode ser modificada pelo mesmo processo das leis ordinárias é classificada como:",
+                alternativas: [
+                    "A) Rígida",
+                    "B) Flexível",
+                    "C) Semirrígida",
+                    "D) Imutável",
+                    "E) Superrígida"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Flexível - Constituições flexíveis podem ser alteradas pelo mesmo processo das leis ordinárias."
+            },
+            {
+                id: 12,
+                categoria: "direitos",
+                enunciado: "Os direitos de primeira geração, segundo a classificação de Karel Vasak, correspondem aos:",
+                alternativas: [
+                    "A) Direitos sociais",
+                    "B) Direitos de solidariedade",
+                    "C) Direitos civis e políticos",
+                    "D) Direitos econômicos",
+                    "E) Direitos culturais"
+                ],
+                correta: 2,
+                explicacao: "CORRETA: C) Direitos civis e políticos - São os direitos de liberdade, típicos do Estado Liberal."
+            },
+            {
+                id: 13,
+                categoria: "principios",
+                enunciado: "O princípio que estabelece a supremacia da Constituição sobre todo o ordenamento jurídico é o da:",
+                alternativas: [
+                    "A) Separação dos Poderes",
+                    "B) Supremacia da Constituição",
+                    "C) Legalidade",
+                    "D) Isonomia",
+                    "E) Moralidade"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Supremacia da Constituição - Princípio fundamental que garante a hierarquia constitucional."
+            },
+            {
+                id: 14,
+                categoria: "classificacao",
+                enunciado: "A teoria dos direitos fundamentais como sistema de regras e princípios foi desenvolvida por:",
+                alternativas: [
+                    "A) Hans Kelsen",
+                    "B) Robert Alexy",
+                    "C) Georg Jellinek",
+                    "D) Norberto Bobbio",
+                    "E) Paulo Bonavides"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Robert Alexy - Desenvolveu a teoria da estrutura dos direitos fundamentais."
+            },
+            {
+                id: 15,
+                categoria: "documentos",
+                enunciado: "A Declaração Universal dos Direitos Humanos foi adotada pela ONU em:",
+                alternativas: [
+                    "A) 1945",
+                    "B) 1948",
+                    "C) 1950",
+                    "D) 1966",
+                    "E) 1976"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) 1948 - Adotada pela Assembleia Geral das Nações Unidas em 10 de dezembro de 1948."
+            },
+            {
+                id: 16,
+                categoria: "classificacao",
+                enunciado: "A CF/88 é considerada uma constituição:",
+                alternativas: [
+                    "A) Analítica",
+                    "B) Sintética",
+                    "C) Outorgada",
+                    "D) Cesarista",
+                    "E) Pactuada"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Analítica - Por ser extensa e detalhada, regulamentando minuciosamente diversos temas."
+            },
+            {
+                id: 17,
+                categoria: "direitos",
+                enunciado: "Os direitos sociais na CF/88 estão previstos principalmente no:",
+                alternativas: [
+                    "A) Art. 5º",
+                    "B) Art. 6º",
+                    "C) Art. 7º",
+                    "D) Art. 8º",
+                    "E) Art. 9º"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) Art. 6º - Estabelece os direitos sociais fundamentais como educação, saúde, trabalho, etc."
+            },
+            {
+                id: 18,
+                categoria: "principios",
+                enunciado: "O princípio da proporcionalidade é composto pelos seguintes subprincípios, EXCETO:",
+                alternativas: [
+                    "A) Adequação",
+                    "B) Necessidade",
+                    "C) Proporcionalidade em sentido estrito",
+                    "D) Razoabilidade",
+                    "E) Todos fazem parte"
+                ],
+                correta: 3,
+                explicacao: "CORRETA: D) Razoabilidade - Embora relacionado, não é um subprincípio da proporcionalidade, mas um princípio autônomo."
+            },
+            {
+                id: 19,
+                categoria: "classificacao",
+                enunciado: "A Constituição que surge de um processo democrático com participação popular é:",
+                alternativas: [
+                    "A) Outorgada",
+                    "B) Cesarista",
+                    "C) Pactuada",
+                    "D) Promulgada",
+                    "E) Imposta"
+                ],
+                correta: 3,
+                explicacao: "CORRETA: D) Promulgada - Resulta de processo constituinte democrático com participação popular."
+            },
+            {
+                id: 20,
+                categoria: "classificacao",
+                enunciado: "A teoria da 'constituição dirigente' foi desenvolvida por:",
+                alternativas: [
+                    "A) Gomes Canotilho",
+                    "B) Hans Kelsen",
+                    "C) Carl Schmitt",
+                    "D) Ferdinand Lassalle",
+                    "E) Ruy Barbosa"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Gomes Canotilho - Desenvolveu a teoria da constituição como programa dirigente para o futuro."
+            },
+            {
+                id: 21,
+                categoria: "direitos",
+                enunciado: "Segundo a teoria de Georg Jellinek, o status em que o indivíduo está em posição de submissão ao Estado é o:",
+                alternativas: [
+                    "A) Status positivus",
+                    "B) Status negativus",
+                    "C) Status activus",
+                    "D) Status passivus",
+                    "E) Status subjectionis"
+                ],
+                correta: 4,
+                explicacao: "CORRETA: E) Status subjectionis - É a posição de sujeição do indivíduo perante o Estado."
+            },
+            {
+                id: 22,
+                categoria: "documentos",
+                enunciado: "O Pacto Internacional sobre Direitos Civis e Políticos foi adotado pela ONU em:",
+                alternativas: [
+                    "A) 1948",
+                    "B) 1950",
+                    "C) 1966",
+                    "D) 1976",
+                    "E) 1984"
+                ],
+                correta: 2,
+                explicacao: "CORRETA: C) 1966 - Adotado pela Assembleia Geral em 16 de dezembro de 1966."
+            },
+            {
+                id: 23,
+                categoria: "classificacao",
+                enunciado: "A Constituição que resulta de um acordo entre o governante e representantes do povo é:",
+                alternativas: [
+                    "A) Outorgada",
+                    "B) Promulgada",
+                    "C) Cesarista",
+                    "D) Pactuada",
+                    "E) Democrática"
+                ],
+                correta: 3,
+                explicacao: "CORRETA: D) Pactuada - Resulta de um pacto ou acordo entre diferentes forças políticas."
+            },
+            {
+                id: 24,
+                categoria: "direitos",
+                enunciado: "A teoria do 'direito como integridade' foi desenvolvida por:",
+                alternativas: [
+                    "A) Ronald Dworkin",
+                    "B) H. L. A. Hart",
+                    "C) Hans Kelsen",
+                    "D) John Austin",
+                    "E) Jeremy Bentham"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Ronald Dworkin - Propõe que o direito deve ser interpretado como um sistema coerente e integrado."
+            },
+            {
+                id: 25,
+                categoria: "documentos",
+                enunciado: "A Convenção Americana sobre Direitos Humanos foi adotada em:",
+                alternativas: [
+                    "A) Bogotá, 1948",
+                    "B) São José, 1969",
+                    "C) Buenos Aires, 1950",
+                    "D) Caracas, 1975",
+                    "E) Lima, 1980"
+                ],
+                correta: 1,
+                explicacao: "CORRETA: B) São José, 1969 - Adotada na Conferência Especializada Interamericana sobre Direitos Humanos."
+            },
+            {
+                id: 26,
+                categoria: "classificacao",
+                enunciado: "A Constituição que estabelece limites ao poder de reforma constitucional é:",
+                alternativas: [
+                    "A) Superrígida",
+                    "B) Rígida",
+                    "C) Semirrígida",
+                    "D) Flexível",
+                    "E) Imutável"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Superrígida - Possui cláusulas pétreas ou limites materiais à reforma constitucional."
+            },
+            {
+                id: 27,
+                categoria: "direitos",
+                enunciado: "A teoria da 'reserva do possível' foi desenvolvida por:",
+                alternativas: [
+                    "A) Tribunal Constitucional Federal alemão",
+                    "B) Hans Kelsen",
+                    "C) Robert Alexy",
+                    "D) Peter Häberle",
+                    "E) Konrad Hesse"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Tribunal Constitucional Federal alemão - Desenvolveu a teoria que limita direitos sociais às possibilidades orçamentárias."
+            },
+            {
+                id: 28,
+                categoria: "documentos",
+                enunciado: "O Protocolo de San Salvador trata de:",
+                alternativas: [
+                    "A) Direitos econômicos, sociais e culturais",
+                    "B) Direitos civis e políticos",
+                    "C) Abolição da pena de morte",
+                    "D) Direitos das mulheres",
+                    "E) Direitos das crianças"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Direitos econômicos, sociais e culturais - Protocolo adicional à Convenção Americana sobre Direitos Humanos."
+            },
+            {
+                id: 29,
+                categoria: "classificacao",
+                enunciado: "A Constituição que contém apenas regras básicas de organização do Estado é:",
+                alternativas: [
+                    "A) Sintética",
+                    "B) Analítica",
+                    "C) Dirigente",
+                    "D) Programática",
+                    "E) Garantia"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) Sintética - Caracterizada por ser breve e conter apenas normas fundamentais."
+            },
+            {
+                id: 30,
+                categoria: "direitos",
+                enunciado: "A teoria do 'constitucionalismo do oprimido' foi desenvolvida por:",
+                alternativas: [
+                    "A) João Baptista Herkenhoff",
+                    "B) Paulo Bonavides",
+                    "C) José Afonso da Silva",
+                    "D) Celso Antônio Bandeira de Mello",
+                    "E) Luís Roberto Barroso"
+                ],
+                correta: 0,
+                explicacao: "CORRETA: A) João Baptista Herkenhoff - Aborda a constituição a partir da perspectiva dos excluídos e oprimidos."
+            }
+        ];
+
+        // ========== VARIÁVEIS GLOBAIS ==========
+        let questaoAtual = 0;
+        let acertos = 0;
+        let erros = 0;
+        let respostas = Array(questaoDados.length).fill(null);
+        let alternativaSelecionada = null;
+        let questaoRespondida = false;
+
+        // ========== INICIALIZAÇÃO ==========
+        window.onload = function() {
+            carregarQuestao();
+            atualizarEstatisticas();
+            atualizarBotoes();
+        };
+
+        // ========== FUNÇÕES PRINCIPAIS ==========
+        function carregarQuestao() {
+            const questao = questaoDados[questaoAtual];
+            const areaQuestao = document.getElementById('area-questao');
+            
+            let html = `
+                <div class="questao-container">
+                    <div class="questao-header">
+                        <div class="questao-numero">Questão ${questao.id}</div>
+                        <div class="questao-categoria">${questao.categoria.toUpperCase()}</div>
+                    </div>
+                    <div class="enunciado">${questao.enunciado}</div>
+                    <div class="alternativas">
+            `;
+            
+            questao.alternativas.forEach((alternativa, index) => {
+                const letra = String.fromCharCode(65 + index);
+                let classe = "alternativa";
+                
+                // Verificar se já foi respondida
+                if (respostas[questaoAtual] !== null) {
+                    if (index === questao.correta) {
+                        classe += " correta";
+                    } else if (index === respostas[questaoAtual] && index !== questao.correta) {
+                        classe += " incorreta";
+                    }
+                } else if (index === alternativaSelecionada) {
+                    classe += " selecionada";
+                }
+                
+                html += `
+                    <div class="${classe}" onclick="selecionarAlternativa(${index})">
+                        <span class="alternativa-letra">${letra}</span>
+                        ${alternativa}
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    <div class="explicacao-questao" id="explicacao">
+                        <h4><i class="fas fa-lightbulb"></i> Explicação:</h4>
+                        <p>${questao.explicacao}</p>
+                    </div>
+                </div>
+            `;
+            
+            areaQuestao.innerHTML = html;
+            
+            // Mostrar/ocultar explicação
+            const explicacao = document.getElementById('explicacao');
+            if (respostas[questaoAtual] !== null) {
+                explicacao.style.display = 'block';
+            } else {
+                explicacao.style.display = 'none';
+            }
+            
+            // Atualizar progresso
+            const progresso = ((questaoAtual + 1) / questaoDados.length) * 100;
+            document.getElementById('progresso-fill').style.width = `${progresso}%`;
+            document.getElementById('progresso-texto').textContent = `${questaoAtual + 1}/${questaoDados.length}`;
+            
+            // Atualizar estatísticas
+            atualizarEstatisticas();
+            atualizarBotoes();
+        }
+
+        function selecionarAlternativa(index) {
+            if (questaoRespondida || respostas[questaoAtual] !== null) return;
+            
+            // Remover seleção anterior
+            const alternativas = document.querySelectorAll('.alternativa');
+            alternativas.forEach(alt => {
+                alt.classList.remove('selecionada');
+            });
+            
+            // Adicionar seleção atual
+            alternativas[index].classList.add('selecionada');
+            alternativaSelecionada = index;
+        }
+
+        function responderQuestao() {
+            if (alternativaSelecionada === null && respostas[questaoAtual] === null) {
+                alert('Por favor, selecione uma alternativa antes de responder.');
+                return;
+            }
+            
+            if (questaoRespondida && respostas[questaoAtual] !== null) return;
+            
+            questaoRespondida = true;
+            
+            // Registrar resposta
+            if (respostas[questaoAtual] === null) {
+                respostas[questaoAtual] = alternativaSelecionada;
+                
+                // Verificar se acertou
+                if (alternativaSelecionada === questaoDados[questaoAtual].correta) {
+                    acertos++;
+                } else {
+                    erros++;
+                }
+            }
+            
+            // Mostrar resultado
+            carregarQuestao();
+            atualizarEstatisticas();
+            atualizarBotoes();
+        }
+
+        function anteriorQuestao() {
+            if (questaoAtual > 0) {
+                questaoAtual--;
+                alternativaSelecionada = respostas[questaoAtual];
+                questaoRespondida = respostas[questaoAtual] !== null;
+                carregarQuestao();
+            }
+        }
+
+        function proximaQuestao() {
+            if (questaoAtual < questaoDados.length - 1) {
+                questaoAtual++;
+                alternativaSelecionada = respostas[questaoAtual];
+                questaoRespondida = respostas[questaoAtual] !== null;
+                carregarQuestao();
+            }
+        }
+
+        function finalizarSimulado() {
+            const naoRespondidas = questaoDados.length - (acertos + erros);
+            const percentual = Math.round((acertos / questaoDados.length) * 100);
+            
+            document.getElementById('total-acertos').textContent = acertos;
+            document.getElementById('total-erros').textContent = erros;
+            document.getElementById('total-nao-respondidas').textContent = naoRespondidas;
+            document.getElementById('pontuacao-final').textContent = `${percentual}%`;
+            
+            // Mensagem motivacional
+            const mensagem = document.getElementById('mensagem-motivacional');
+            if (percentual >= 90) {
+                mensagem.textContent = "Excelente! Você domina o conteúdo de Direito Constitucional!";
+            } else if (percentual >= 70) {
+                mensagem.textContent = "Muito bom! Seu conhecimento está acima da média!";
+            } else if (percentual >= 50) {
+                mensagem.textContent = "Bom trabalho! Continue estudando para melhorar ainda mais!";
+            } else {
+                mensagem.textContent = "Não desanime! Revise o material e tente novamente!";
+            }
+            
+            // Mostrar resultado final
+            document.getElementById('resultado-final').style.display = 'block';
+            document.querySelector('.questao-area').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'none';
+            document.querySelector('.navegacao').style.display = 'none';
+        }
+
+        function reiniciarSimulado() {
+            questaoAtual = 0;
+            acertos = 0;
+            erros = 0;
+            respostas = Array(questaoDados.length).fill(null);
+            alternativaSelecionada = null;
+            questaoRespondida = false;
+            
+            document.getElementById('resultado-final').style.display = 'none';
+            document.querySelector('.questao-area').style.display = 'block';
+            document.querySelector('.progress-container').style.display = 'block';
+            document.querySelector('.navegacao').style.display = 'flex';
+            
+            carregarQuestao();
+            atualizarEstatisticas();
+        }
+
+        function atualizarEstatisticas() {
+            document.getElementById('questao-atual').textContent = questaoAtual + 1;
+            document.getElementById('acertos').textContent = acertos;
+            document.getElementById('erros').textContent = erros;
+        }
+
+        function atualizarBotoes() {
+            document.getElementById('btn-anterior').disabled = questaoAtual === 0;
+            document.getElementById('btn-proximo').disabled = questaoAtual === questaoDados.length - 1;
+            
+            if (respostas[questaoAtual] !== null) {
+                document.getElementById('btn-responder').innerHTML = '<i class="fas fa-check"></i> Já Respondida';
+                document.getElementById('btn-responder').disabled = true;
+            } else {
+                document.getElementById('btn-responder').innerHTML = '<i class="fas fa-check"></i> Responder';
+                document.getElementById('btn-responder').disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

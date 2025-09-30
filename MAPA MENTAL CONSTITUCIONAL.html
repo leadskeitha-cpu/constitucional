@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Mapa Mental Interativo - Direito Constitucional COMPLETO</title>
+<style>
+  body { 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0; 
+    padding: 20px; 
+    text-align: center; 
+    min-height: 100vh;
+  }
+  
+  header { 
+    background: rgba(255, 255, 255, 0.95); 
+    color: #1e3a8a; 
+    padding: 25px; 
+    font-size: 32px; 
+    font-weight: bold; 
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  
+  .container { 
+    margin: 20px auto; 
+    max-width: 1400px; 
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  
+  .central { 
+    background: linear-gradient(45deg, #fde68a, #fbbf24);
+    padding: 30px; 
+    border-radius: 20px; 
+    display: inline-block; 
+    font-weight: bold; 
+    font-size: 28px; 
+    margin-bottom: 35px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    border: 3px solid #f59e0b;
+  }
+  
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .topic { 
+    cursor: pointer; 
+    padding: 20px 25px; 
+    border-radius: 15px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 18px;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .topic:hover { 
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+  
+  .explicacao { 
+    display: none; 
+    margin: 30px auto; 
+    padding: 30px; 
+    background: white; 
+    border: 3px solid #e5e7eb; 
+    border-radius: 20px; 
+    width: 95%; 
+    text-align: left; 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  
+  .subtopics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .subtopic { 
+    cursor: pointer; 
+    padding: 15px 20px; 
+    border-radius: 12px; 
+    background: #e0f2fe; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold; 
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    gap: 8px;
+  }
+  
+  .subtopic:hover { 
+    background: #93c5fd; 
+    color: white;
+    transform: translateY(-3px);
+    border-color: #3b82f6;
+  }
+  
+  .subexplicacao { 
+    display: none; 
+    margin: 20px 0; 
+    padding: 25px; 
+    background: #f8fafc; 
+    border-left: 6px solid #2563eb; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  h3 { 
+    color: #111827; 
+    margin-top: 0; 
+    font-size: 28px;
+    border-bottom: 3px solid #3b82f6;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+  }
+  
+  h4 {
+    color: #1e40af;
+    margin: 20px 0 15px 0;
+    font-size: 22px;
+  }
+  
+  .conceito-box {
+    background: #f0f9ff;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 15px 0;
+    border-left: 5px solid #0369a1;
+  }
+  
+  .autor-box {
+    background: #fef7ed;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 12px 0;
+    border-left: 5px solid #ea580c;
+  }
+  
+  .doutrina-box {
+    background: #faf5ff;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 12px 0;
+    border-left: 5px solid #7c3aed;
+  }
+  
+  .jurisprudencia-box {
+    background: #f0fdf4;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 12px 0;
+    border-left: 5px solid #16a34a;
+  }
+  
+  .btn-voltar {
+    background: #6b7280;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-voltar:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<header>🏛️ MAPA MENTAL INTERATIVO - DIREITO CONSTITUCIONAL COMPLETO</header>
+
+<div class="container">
+  <div class="central">🎯 Clique nos botões coloridos para explorar cada tema completo!</div>
+
+  <!-- GRADE DE BOTÕES PRINCIPAIS -->
+  <div class="topics-grid">
+    <button class="topic" style="background:#60a5fa;" onclick="mostrar('classificacao')">📚 Classificações da Constituição</button>
+    <button class="topic" style="background:#34d399;" onclick="mostrar('direitos')">👥 Direitos Humanos</button>
+    <button class="topic" style="background:#f87171;" onclick="mostrar('principios')">⚖️ Princípios Constitucionais</button>
+    <button class="topic" style="background:#facc15;" onclick="mostrar('documentos')">📜 Documentos Históricos</button>
+    <button class="topic" style="background:#a78bfa;" onclick="mostrar('evolucao')">⏳ Evolução Histórica</button>
+    <button class="topic" style="background:#f472b6;" onclick="mostrar('autores')">👨‍🏫 Teorias e Autores</button>
+    <button class="topic" style="background:#38bdf8;" onclick="mostrar('juris')">⚖️ Jurisprudência</button>
+    <button class="topic" style="background:#fb923c;" onclick="mostrar('dispositivos')">📊 Dispositivos Legais</button>
+  </div>
+
+  <!-- SEÇÃO: CLASSIFICAÇÕES DA CONSTITUIÇÃO -->
+  <div id="classificacao" class="explicacao">
+    <h3>📚 CLASSIFICAÇÕES DA CONSTITUIÇÃO</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('origem')">🎯 Quanto à Origem</div>
+      <div class="subtopic" onclick="mostrarSub('forma')">📝 Quanto à Forma</div>
+      <div class="subtopic" onclick="mostrarSub('extensao')">⚖️ Quanto à Extensão</div>
+      <div class="subtopic" onclick="mostrarSub('conteudo')">🔍 Quanto ao Conteúdo</div>
+      <div class="subtopic" onclick="mostrarSub('alterabilidade')">🔄 Quanto à Alterabilidade</div>
+      <div class="subtopic" onclick="mostrarSub('elaboracao')">🔬 Modo de Elaboração</div>
+      <div class="subtopic" onclick="mostrarSub('sistematica')">📊 Quanto à Sistemática</div>
+      <div class="subtopic" onclick="mostrarSub('dogmatica')">💡 Quanto à Dogmática</div>
+      <div class="subtopic" onclick="mostrarSub('ontologica')">🎭 Critério Ontológico</div>
+      <div class="subtopic" onclick="mostrarSub('sistema')">⚖️ Quanto ao Sistema</div>
+      <div class="subtopic" onclick="mostrarSub('funcao')">🎯 Quanto à Função</div>
+      <div class="subtopic" onclick="mostrarSub('decretacao')">🌍 Origem da Decretação</div>
+    </div>
+
+    <!-- SUBSESSÕES -->
+    <div id="origem" class="subexplicacao">
+      <h4>🎯 Classificação Quanto à ORIGEM</h4>
+      <div class="conceito-box">
+        <p><strong>🛑 OUTORGADA:</strong> Constituição imposta unilateralmente pelo detentor do poder, sem participação popular. Exemplo: Constituições de 1824, 1937 e 1967 no Brasil.</p>
+        <p><strong>✅ PROMULGADA:</strong> Elaborada democraticamente por Assembleia Constituinte eleita pelo povo. Exemplo: CF/88.</p>
+        <p><strong>👑 CESARISTA:</strong> Participação popular apenas para ratificar vontade do governante, sem efetiva deliberação democrática.</p>
+        <p><strong>🤝 PACTUADA:</strong> Resultado de acordo entre forças políticas rivais. Exemplo: Constituição espanhola de 1978.</p>
+      </div>
+    </div>
+
+    <div id="forma" class="subexplicacao">
+      <h4>📝 Classificação Quanto à FORMA</h4>
+      <div class="conceito-box">
+        <p><strong>📄 ESCRITA (Instrumental):</strong> Constituição codificada em documento único e sistematizado. Exemplo: CF/88.</p>
+        <p><strong>📚 COSTUMEIRA (Não-escrita):</strong> Baseada em tradições, costumes e documentos esparsos. Exemplo clássico: Constituição da Inglaterra.</p>
+      </div>
+    </div>
+
+    <div id="extensao" class="subexplicacao">
+      <h4>⚖️ Classificação Quanto à EXTENSÃO</h4>
+      <div class="conceito-box">
+        <p><strong>✍️ SINTÉTICA:</strong> Constituição concisa, com apenas princípios fundamentais. Exemplo: Constituição dos EUA.</p>
+        <p><strong>📖 ANALÍTICA:</strong> Constituição detalhada que regulamenta minuciosamente diversos temas. Exemplo: CF/88 (uma das mais extensas do mundo).</p>
+        <p><em>Exemplo de norma analítica: Art. 242, §2º da CF/88 que trata do Colégio Pedro II.</em></p>
+      </div>
+    </div>
+
+    <div id="conteudo" class="subexplicacao">
+      <h4>🔍 Classificação Quanto ao CONTEÚDO</h4>
+      <div class="conceito-box">
+        <p><strong>📌 SENTIDO MATERIAL:</strong> Aborda o conteúdo essencial - estrutura do Estado, organização dos poderes e direitos fundamentais.</p>
+        <p><strong>🏷️ SENTIDO FORMAL:</strong> Considera o processo de elaboração e posição hierárquica. Qualquer norma no texto constitucional tem caráter constitucional.</p>
+        <p><em>A CF/88 é formal!</em></p>
+      </div>
+    </div>
+
+    <div id="alterabilidade" class="subexplicacao">
+      <h4>🔄 Classificação Quanto à ALTERABILIDADE</h4>
+      <div class="conceito-box">
+        <p><strong>🔒 RÍGIDA:</strong> Exige processo legislativo mais solene para alteração (Art. 60 da CF/88).</p>
+        <p><strong>🔓 FLEXÍVEL:</strong> Pode ser alterada pelo mesmo processo das leis ordinárias.</p>
+        <p><strong>⚖️ SEMIRRÍGIDA:</strong> Combina rigidez e flexibilidade (ex: Constituição de 1824).</p>
+        <p><strong>🚫 SUPERRÍGIDA:</strong> Possui cláusulas pétreas (Art. 60, §4º da CF/88).</p>
+        <p><strong>🔄 FIXAS:</strong> Só podem ser alteradas pelo poder constituinte originário.</p>
+      </div>
+    </div>
+
+    <div id="elaboracao" class="subexplicacao">
+      <h4>🔬 Classificação Quanto ao MODO DE ELABORAÇÃO</h4>
+      <div class="conceito-box">
+        <p><strong>🎯 DOGMÁTICA:</strong> Elaborada de forma reflexiva e sistemática por assembleias constituintes. Exemplo: CF/88.</p>
+        <p><strong>📜 HISTÓRICA:</strong> Formada gradualmente pela tradição e costumes. Exemplo: Constituição inglesa.</p>
+      </div>
+    </div>
+
+    <div id="sistematica" class="subexplicacao">
+      <h4>📊 Classificação Quanto à SISTEMÁTICA</h4>
+      <div class="conceito-box">
+        <p><strong>📦 REDUZIDA (Unitária):</strong> Código único e sistemático. Exemplo: Constituições brasileiras.</p>
+        <p><strong>📑 VARIADA (Esparsa):</strong> Fragmentada em vários documentos. Exemplo: Constituições belga (1830) e francesa (1875).</p>
+      </div>
+    </div>
+
+    <div id="dogmatica" class="subexplicacao">
+      <h4>💡 Classificação Quanto à DOGMÁTICA</h4>
+      <div class="conceito-box">
+        <p><strong>🔴 ORTODOXA:</strong> Fundada em uma única ideologia. Exemplo: Constituições socialistas.</p>
+        <p><strong>🌈 ECLÉTICA (Compromissória):</strong> Sintetiza diferentes ideologias. Exemplo: CF/88.</p>
+      </div>
+    </div>
+
+    <div id="ontologica" class="subexplicacao">
+      <h4>🎭 Classificação ONTOLÓGICA (Karl Loewenstein)</h4>
+      <div class="conceito-box">
+        <p><strong>📌 NORMATIVA:</strong> Constituição ideal, plenamente eficaz e internalizada.</p>
+        <p><strong>🏷️ NOMINALISTA:</strong> Constituição de fachada, sem correspondência com a realidade.</p>
+        <p><strong>🎭 SEMÂNTICA:</strong> Instrumentalizada para legitimar poder autoritário.</p>
+      </div>
+    </div>
+
+    <div id="sistema" class="subexplicacao">
+      <h4>⚖️ Classificação Quanto ao SISTEMA</h4>
+      <div class="conceito-box">
+        <p><strong>🎯 PRINCIPIOLÓGICA:</strong> Predomínio de princípios constitucionais abstratos. Exemplo: CF/88.</p>
+        <p><strong>📋 PRECEITUAL:</strong> Predomínio de regras concretas e detalhadas. Exemplo: Constituição mexicana.</p>
+      </div>
+    </div>
+
+    <div id="funcao" class="subexplicacao">
+      <h4>🎯 Classificação Quanto à FUNÇÃO</h4>
+      <div class="conceito-box">
+        <p><strong>⏱️ PROVISÓRIA:</strong> Constituição de transição entre regimes políticos.</p>
+        <p><strong>🏛️ DEFINITIVA:</strong> Constituição de duração indeterminada, ordem constitucional permanente.</p>
+      </div>
+    </div>
+
+    <div id="decretacao" class="subexplicacao">
+      <h4>🌍 Classificação Quanto à ORIGEM DA DECRETAÇÃO</h4>
+      <div class="conceito-box">
+        <p><strong>🌐 HETEROCONSTITUIÇÃO:</strong> Imposta por agente externo (potência estrangeira, ONU).</p>
+        <p><strong>🇧🇷 AUTOCONSTITUIÇÃO:</strong> Elaborada internamente pelo povo (assembleia constituinte ou movimento revolucionário).</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: DIREITOS HUMANOS -->
+  <div id="direitos" class="explicacao">
+    <h3>👥 DIREITOS HUMANOS - TEORIA COMPLETA</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('geracoes')">📅 Gerações/Dimensões</div>
+      <div class="subtopic" onclick="mostrarSub('status')">🎯 Status de Jellinek</div>
+      <div class="subtopic" onclick="mostrarSub('conceito')">🔍 Conceito Fundamental</div>
+      <div class="subtopic" onclick="mostrarSub('terminologia')">📝 Terminologia</div>
+    </div>
+
+    <div id="geracoes" class="subexplicacao">
+      <h4>📅 GERAÇÕES/DIMENSÕES DOS DIREITOS HUMANOS</h4>
+      <div class="conceito-box">
+        <p><strong>1️⃣ PRIMEIRA GERAÇÃO - DIREITOS DE LIBERDADE:</strong> Direitos civis e políticos. Marcos: Revoluções Americana e Francesa. Exigem abstenção estatal.</p>
+        <p><strong>2️⃣ SEGUNDA GERAÇÃO - DIREITOS DE IGUALDADE:</strong> Direitos econômicos, sociais e culturais. Surge com o Estado Social. Exigem ação positiva do Estado.</p>
+        <p><strong>3️⃣ TERCEIRA GERAÇÃO - DIREITOS DE SOLIDARIEDADE:</strong> Direitos difusos e coletivos (meio ambiente, paz, desenvolvimento).</p>
+        <p><strong>4️⃣ QUARTA GERAÇÃO:</strong> Direitos à democracia, informação e pluralismo (Bonavides) OU direitos da biotecnologia (Bobbio).</p>
+        <p><strong>5️⃣ QUINTA GERAÇÃO:</strong> Direito à paz internacional (Bonavides).</p>
+        <p><strong>6️⃣ SEXTA GERAÇÃO:</strong> Democracia, pluralismo, direito à informação e água potável (Bulos).</p>
+        <p><strong>7️⃣ SÉTIMA GERAÇÃO:</strong> Direitos digitais e acesso à internet (PEC 8/2020).</p>
+      </div>
+    </div>
+
+    <div id="status" class="subexplicacao">
+      <h4>🎯 STATUS DE JELLINEK</h4>
+      <div class="conceito-box">
+        <p><strong>➕ STATUS POSITIVO:</strong> Direito a exigir prestações do Estado.</p>
+        <p><strong>➖ STATUS NEGATIVO:</strong> Direito de não sofrer interferência estatal.</p>
+        <p><strong>🛑 STATUS PASSIVO:</strong> Situação de sujeição ao Estado.</p>
+        <p><strong>✅ STATUS ATIVO:</strong> Direito de participar da formação da vontade estatal.</p>
+      </div>
+    </div>
+
+    <div id="conceito" class="subexplicacao">
+      <h4>🔍 CONCEITO DE DIREITOS HUMANOS</h4>
+      <div class="conceito-box">
+        <p><strong>Definição ONU:</strong> "Garantias jurídicas universais que protegem indivíduos e grupos contra ações ou omissões dos governos que atentem contra a dignidade humana".</p>
+        <p>Direitos Essenciais, Liberdades Públicas, Direitos do Homem, Direitos Humanos Fundamentais.</p>
+      </div>
+    </div>
+
+    <div id="terminologia" class="subexplicacao">
+      <h4>📝 TERMINOLOGIA - DIFERENÇAS CONCEITUAIS</h4>
+      <div class="conceito-box">
+        <p><strong>🌍 DIREITOS HUMANOS:</strong> Reconhecidos internacionalmente.</p>
+        <p><strong>🇧🇷 DIREITOS FUNDAMENTAIS:</strong> Positivados na Constituição de cada Estado.</p>
+        <p><strong>📜 DIREITOS FUNDAMENTAIS ATÍPICOS:</strong> Não expressamente enumerados, mas decorrentes do regime e princípios constitucionais (Art. 5º, §2º, CF/88).</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: PRINCÍPIOS CONSTITUCIONAIS -->
+  <div id="principios" class="explicacao">
+    <h3>⚖️ PRINCÍPIOS CONSTITUCIONAIS FUNDAMENTAIS</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('retrocesso')">🔄 Proibição ao Retrocesso</div>
+      <div class="subtopic" onclick="mostrarSub('reserva')">💰 Reserva do Possível</div>
+      <div class="subtopic" onclick="mostrarSub('ponderacao')">⚖️ Ponderação</div>
+      <div class="subtopic" onclick="mostrarSub('atipicos')">📜 Direitos Atípicos</div>
+      <div class="subtopic" onclick="mostrarSub('norteadores')">🎯 Princípios Norteadores</div>
+    </div>
+
+    <div id="retrocesso" class="subexplicacao">
+      <h4>🔄 PROIBIÇÃO AO RETROCESSO</h4>
+      <div class="conceito-box">
+        <p><strong>Conceito:</strong> Vedação à supressão ou redução de direitos fundamentais já consolidados.</p>
+        <p><strong>Base Legal:</strong> Art. 30 da Declaração Universal dos Direitos Humanos (1948).</p>
+        <p><strong>Doutrina:</strong> Gomes Canotilho - "núcleo essencial dos direitos já realizados não pode ser suprimido sem alternativas compensatórias".</p>
+        <p><strong>Jurisprudência:</strong> Ricardo Lewandowski (STF) - direitos fundamentais não podem ser simplesmente suprimidos.</p>
+      </div>
+    </div>
+
+    <div id="reserva" class="subexplicacao">
+      <h4>💰 RESERVA DO POSSÍVEL vs MÍNIMO EXISTENCIAL</h4>
+      <div class="conceito-box">
+        <p><strong>RESERVA DO POSSÍVEL:</strong> Estado só deve realizar o que está dentro de seus limites orçamentários.</p>
+        <p><strong>MÍNIMO EXISTENCIAL:</strong> Conjunto de bens materiais e imateriais indispensáveis para vida digna.</p>
+        <p><strong>Tensão:</strong> Discussão entre limitações orçamentárias e direitos fundamentais essenciais.</p>
+      </div>
+    </div>
+
+    <div id="ponderacao" class="subexplicacao">
+      <h4>⚖️ PONDERAÇÃO (Robert Alexy)</h4>
+      <div class="conceito-box">
+        <p><strong>Teoria da Ponderação:</strong> Solução de conflitos entre princípios constitucionais através da proporcionalidade.</p>
+        <p><strong>Objetivo:</strong> Maximizar a realização de ambos os princípios em conflito.</p>
+        <p><strong>Aplicação:</strong> Em caso de colisão, busca-se decisão menos onerosa possível à parte derrotada.</p>
+      </div>
+    </div>
+
+    <div id="atipicos" class="subexplicacao">
+      <h4>📜 DIREITOS FUNDAMENTAIS ATÍPICOS</h4>
+      <div class="conceito-box">
+        <p><strong>Base Legal:</strong> Art. 5º, §2º da CF/88 - "Os direitos e garantias expressos nesta Constituição não excluem outros decorrentes do regime e dos princípios por ela adotados".</p>
+        <p><strong>Conceito:</strong> Direitos não expressamente enumerados, mas decorrentes do sistema constitucional.</p>
+        <p><strong>Doutrina:</strong> Eduardo Rodrigues dos Santos - ampliação da proteção dos direitos fundamentais.</p>
+      </div>
+    </div>
+
+    <div id="norteadores" class="subexplicacao">
+      <h4>🎯 PRINCÍPIOS NORTEADORES</h4>
+      <div class="conceito-box">
+        <p><strong>⚖️ RAZOABILIDADE:</strong> Proporcionalidade e adequação nas decisões.</p>
+        <p><strong>🚫 PROIBIÇÃO DO EXCESSO:</strong> Vedação a medidas desnecessárias ou excessivas.</p>
+        <p><strong>⚖️ EQUIDADE:</strong> Justiça e igualdade no tratamento.</p>
+        <p><em>Ferramentas hermenêuticas essenciais para solução de controvérsias constitucionais.</em></p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: DOCUMENTOS HISTÓRICOS -->
+  <div id="documentos" class="explicacao">
+    <h3>📜 DOCUMENTOS HISTÓRICOS FUNDAMENTAIS</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('hamurabi')">◼️ Código de Hamurábi</div>
+      <div class="subtopic" onclick="mostrarSub('torah')">📖 Torah</div>
+      <div class="subtopic" onclick="mostrarSub('magna')">👑 Magna Carta</div>
+      <div class="subtopic" onclick="mostrarSub('mexicana')">🇲🇽 Constituição Mexicana</div>
+      <div class="subtopic" onclick="mostrarSub('weimar')">🇩🇪 Constituição de Weimar</div>
+      <div class="subtopic" onclick="mostrarSub('internacional')">🌍 Carta Internacional</div>
+    </div>
+
+    <div id="hamurabi" class="subexplicacao">
+      <h4>◼️ CÓDIGO DE HAMURÁBI (1750 a.C.)</h4>
+      <div class="conceito-box">
+        <p><strong>Importância:</strong> Primeiro conjunto de leis escritas da história.</p>
+        <p><strong>Princípio:</strong> Proporcionalidade da pena ("olho por olho, dente por dente").</p>
+        <p><strong>Legado:</strong> Estabeleceu direitos como propriedade, vida, honra, dignidade, família.</p>
+        <p><strong>Inovação:</strong> Previu supremacia das leis perante os governantes.</p>
+      </div>
+    </div>
+
+    <div id="torah" class="subexplicacao">
+      <h4>📖 TORAH/LEI DE MOISÉS (Séc. XII a.C.)</h4>
+      <div class="conceito-box">
+        <p><strong>Base:</strong> Cinco primeiros livros da Bíblia (Pentateuco).</p>
+        <p><strong>Sistema:</strong> Jurídico-religioso que influenciou tradições judaico-cristãs.</p>
+        <p><strong>Conteúdo:</strong> Regras religiosas, morais e sociais para o povo de Israel.</p>
+        <p><strong>Relevância:</strong> Preceitos morais e jurídicos permanecem atuais.</p>
+      </div>
+    </div>
+
+    <div id="magna" class="subexplicacao">
+      <h4>👑 MAGNA CARTA (1215)</h4>
+      <div class="conceito-box">
+        <p><strong>Contexto:</strong> Assinada pelo Rei João Sem Terra da Inglaterra.</p>
+        <p><strong>Inovação:</strong> Primeira grande limitação ao poder absoluto dos monarcas.</p>
+        <p><strong>Garantias:</strong> Devido processo legal, propriedade privada, liberdade de ir e vir.</p>
+        <p><strong>Legado:</strong> Influenciou o desenvolvimento do constitucionalismo mundial.</p>
+      </div>
+    </div>
+
+    <div id="mexicana" class="subexplicacao">
+      <h4>🇲🇽 CONSTITUIÇÃO MEXICANA (1917)</h4>
+      <div class="conceito-box">
+        <p><strong>Marco:</strong> Primeira constituição social do mundo.</p>
+        <p><strong>Contexto:</strong> Influenciada pela Revolução Mexicana.</p>
+        <p><strong>Inovação:</strong> Incorporação pioneira de direitos sociais e trabalhistas.</p>
+        <p><strong>Influência:</strong> Serviu de modelo para Constituição brasileira de 1934.</p>
+      </div>
+    </div>
+
+    <div id="weimar" class="subexplicacao">
+      <h4>🇩🇪 CONSTITUIÇÃO DE WEIMAR (1919)</h4>
+      <div class="conceito-box">
+        <p><strong>Transição:</strong> Do Estado Liberal para o Estado Social.</p>
+        <p><strong>Inovação:</strong> Incorporação de direitos econômicos e sociais.</p>
+        <p><strong>Direitos:</strong> Trabalho, proteção ao trabalho, assistência social, sindicalização.</p>
+        <p><strong>Influência:</strong> Fundamental para o constitucionalismo social do século XX.</p>
+      </div>
+    </div>
+
+    <div id="internacional" class="subexplicacao">
+      <h4>🌍 CARTA INTERNACIONAL DE DIREITOS HUMANOS</h4>
+      <div class="conceito-box">
+        <p><strong>📑 Declaração Universal dos Direitos Humanos (1948):</strong> Documento fundador, base do direito internacional.</p>
+        <p><strong>⚖️ Pacto Internacional dos Direitos Civis e Políticos (1966):</strong> Instrumento vinculante de proteção.</p>
+        <p><strong>🤝 Pacto Internacional dos Direitos Sociais e Culturais (1966):</strong> Direitos sociais vinculantes.</p>
+        <p><strong>Contexto:</strong> Resposta às atrocidades da Segunda Guerra Mundial.</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: EVOLUÇÃO HISTÓRICA -->
+  <div id="evolucao" class="explicacao">
+    <h3>⏳ EVOLUÇÃO HISTÓRICA DO CONSTITUCIONALISMO</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('antiguidade')">🏛️ Antiguidade</div>
+      <div class="subtopic" onclick="mostrarSub('media')">⛪ Idade Média</div>
+      <div class="subtopic" onclick="mostrarSub('moderna')">🎩 Idade Moderna</div>
+      <div class="subtopic" onclick="mostrarSub('americana')">🇺🇸 Constitucionalismo Americano</div>
+      <div class="subtopic" onclick="mostrarSub('moderno')">🇫🇷 Constitucionalismo Moderno</div>
+      <div class="subtopic" onclick="mostrarSub('contemporaneo')">🌐 Constitucionalismo Contemporâneo</div>
+    </div>
+
+    <div id="antiguidade" class="subexplicacao">
+      <h4>🏛️ ANTIGUIDADE</h4>
+      <div class="conceito-box">
+        <p><strong>"Lei do Senhor":</strong> Hebreus - limitações baseadas em concepções religiosas.</p>
+        <p><strong>Democracia direta:</strong> Cidades-estados gregas.</p>
+        <p><strong>Característica:</strong> Direitos vinculados à posição social, sem caráter universal.</p>
+      </div>
+    </div>
+
+    <div id="media" class="subexplicacao">
+      <h4>⛪ IDADE MÉDIA</h4>
+      <div class="conceito-box">
+        <p><strong>Magna Carta (1215):</strong> Primeiro documento limitador do poder real.</p>
+        <p><strong>Petition of Rights (1628):</strong> Outro marco do constitucionalismo medieval.</p>
+        <p><strong>Característica:</strong> Pluralismo jurídico (direito canônico, feudal, real).</p>
+      </div>
+    </div>
+
+    <div id="moderna" class="subexplicacao">
+      <h4>🎩 IDADE MODERNA</h4>
+      <div class="conceito-box">
+        <p><strong>Habeas Corpus Act (1679):</strong> Garantia fundamental de liberdade.</p>
+        <p><strong>Bill of Rights (1689):</strong> Estabeleceu direitos do Parlamento inglês.</p>
+        <p><strong>Act of Settlement (1701):</strong> Independência do judiciário.</p>
+        <p><strong>Característica:</strong> Nascimento do constitucionalismo e direitos fundamentais.</p>
+      </div>
+    </div>
+
+    <div id="americana" class="subexplicacao">
+      <h4>🇺🇸 CONSTITUCIONALISMO NORTE-AMERICANO</h4>
+      <div class="conceito-box">
+        <p><strong>Fundamental Orders of Connecticut (1639):</strong> Primeiro documento constitucional americano.</p>
+        <p><strong>Declaration of Rights da Virgínia (1776):</strong> Marco dos direitos individuais.</p>
+        <p><strong>Constituição dos EUA (1787):</strong> Primeira constituição escrita moderna.</p>
+        <p><strong>Característica:</strong> Federalismo, separação de poderes, controle de constitucionalidade.</p>
+      </div>
+    </div>
+
+    <div id="moderno" class="subexplicacao">
+      <h4>🇫🇷 CONSTITUCIONALISMO MODERNO</h4>
+      <div class="conceito-box">
+        <p><strong>Constituição norte-americana (1787):</strong> Modelo de constituição escrita.</p>
+        <p><strong>Constituição francesa (1791):</strong> Influenciada pela Revolução Francesa.</p>
+        <p><strong>Característica:</strong> Consolidação do Estado Liberal de Direito.</p>
+      </div>
+    </div>
+
+    <div id="contemporaneo" class="subexplicacao">
+      <h4>🌐 CONSTITUCIONALISMO CONTEMPORÂNEO</h4>
+      <div class="conceito-box">
+        <p><strong>Ampliação de direitos:</strong> Segunda e terceira dimensões.</p>
+        <p><strong>Constitucionalismo globalizado:</strong> Influência internacional.</p>
+        <p><strong>Neoconstitucionalismo:</strong> Fortalecimento da jurisdição constitucional.</p>
+        <p><strong>Estado Constitucional de Direito:</strong> Supremacia da Constituição.</p>
+        <p><strong>Pós-positivismo:</strong> Releitura do direito natural.</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: AUTORES E TEORIAS -->
+  <div id="autores" class="explicacao">
+    <h3>👨‍🏫 TEORIAS E AUTORES FUNDAMENTAIS</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('kelsen')">⚖️ Hans Kelsen</div>
+      <div class="subtopic" onclick="mostrarSub('loewenstein')">🎭 Karl Loewenstein</div>
+      <div class="subtopic" onclick="mostrarSub('bobbio')">📚 Norberto Bobbio</div>
+      <div class="subtopic" onclick="mostrarSub('vasak')">📅 Karel Vasak</div>
+      <div class="subtopic" onclick="mostrarSub('sarlet')">🇧🇷 Ingo Sarlet</div>
+      <div class="subtopic" onclick="mostrarSub('jellinek')">🎯 Georg Jellinek</div>
+      <div class="subtopic" onclick="mostrarSub('alexy')">⚖️ Robert Alexy</div>
+      <div class="subtopic" onclick="mostrarSub('bonavides')">🇧🇷 Paulo Bonavides</div>
+      <div class="subtopic" onclick="mostrarSub('bulos')">🇧🇷 Uadi L. Bulos</div>
+    </div>
+
+    <div id="kelsen" class="subexplicacao">
+      <h4>⚖️ HANS KELSEN</h4>
+      <div class="autor-box">
+        <p><strong>Teoria Pura do Direito:</strong> Constituição como norma fundamental pura (Grundnorm).</p>
+        <p><strong>Conceito:</strong> Localizada no plano do "dever-ser", desvinculada de fundamentações sociológicas, políticas ou filosóficas.</p>
+        <p><strong>Contribuição:</strong> Sentido jurídico formalista da Constituição.</p>
+      </div>
+    </div>
+
+    <div id="loewenstein" class="subexplicacao">
+      <h4>🎭 KARL LOEWENSTEIN</h4>
+      <div class="autor-box">
+        <p><strong>Classificação Ontológica:</strong> Normativa, Nominalista, Semântica.</p>
+        <p><strong>Objetivo:</strong> Identificar correspondência entre texto constitucional e realidade política.</p>
+        <p><strong>Legado:</strong> Critério de efetividade constitucional.</p>
+      </div>
+    </div>
+
+    <div id="bobbio" class="subexplicacao">
+      <h4>📚 NORBERTO BOBBIO</h4>
+      <div class="autor-box">
+        <p><strong>Obra:</strong> "A Era dos Direitos" - fundamental para teoria dos direitos humanos.</p>
+        <p><strong>Contribuição:</strong> Defende classificação em "dimensões" rather than "gerações".</p>
+        <p><strong>Visão:</strong> Direitos se complementam rather than se substituem.</p>
+      </div>
+    </div>
+
+    <div id="vasak" class="subexplicacao">
+      <h4>📅 KAREL VASAK</h4>
+      <div class="autor-box">
+        <p><strong>Teoria das Gerações:</strong> 1ª (Liberdade), 2ª (Igualdade), 3ª (Fraternidade).</p>
+        <p><strong>Metáfora:</strong> Revolução Francesa como base classificatória.</p>
+        <p><strong>Objetivo:</strong> Ferramenta didática para evolução histórica dos direitos.</p>
+      </div>
+    </div>
+
+    <div id="sarlet" class="subexplicacao">
+      <h4>🇧🇷 INGO SARLET</h4>
+      <div class="autor-box">
+        <p><strong>Especialidade:</strong> Direitos fundamentais.</p>
+        <p><strong>Contribuição:</strong> Defende classificação em dimensões cumulativas e indivisíveis.</p>
+        <p><strong>Visão:</strong> Evita ideia de superação, enfatiza coexistência dos direitos.</p>
+      </div>
+    </div>
+
+    <div id="jellinek" class="subexplicacao">
+      <h4>🎯 GEORG JELLINEK</h4>
+      <div class="autor-box">
+        <p><strong>Teoria dos Quatro Status:</strong> Positivo, Negativo, Passivo, Ativo.</p>
+        <p><strong>Objetivo:</strong> Explicar diferentes posições do indivíduo perante o Estado.</p>
+        <p><strong>Período:</strong> Final do século XIX.</p>
+      </div>
+    </div>
+
+    <div id="alexy" class="subexplicacao">
+      <h4>⚖️ ROBERT ALEXY</h4>
+      <div class="autor-box">
+        <p><strong>Teoria da Ponderação:</strong> Solução de conflitos entre princípios constitucionais.</p>
+        <p><strong>Princípio:</strong> Proporcionalidade nas decisões constitucionais.</p>
+        <p><strong>Objetivo:</strong> Maximizar realização de ambos os princípios em conflito.</p>
+      </div>
+    </div>
+
+    <div id="bonavides" class="subexplicacao">
+      <h4>🇧🇷 PAULO BONAVIDES</h4>
+      <div class="autor-box">
+        <p><strong>Contribuição:</strong> Defensor das 4ª, 5ª e 6ª gerações dos direitos fundamentais.</p>
+        <p><strong>4ª Geração:</strong> Direito à democracia, informação e pluralismo político.</p>
+        <p><strong>5ª Geração:</strong> Direito à paz.</p>
+      </div>
+    </div>
+
+    <div id="bulos" class="subexplicacao">
+      <h4>🇧🇷 UADI L. BULOS</h4>
+      <div class="autor-box">
+        <p><strong>Teoria da 6ª Dimensão:</strong> Democracia, pluralismo político e direito à informação.</p>
+        <p><strong>Inclusão:</strong> Direito à água potável como direito humano essencial.</p>
+        <p><strong>Base:</strong> Resolução 64/A/RES/64/292 da ONU (2010).</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: JURISPRUDÊNCIA -->
+  <div id="juris" class="explicacao">
+    <h3>⚖️ JURISPRUDÊNCIA E CASOS IMPORTANTES</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('riggs')">⚖️ Riggs vs. Palmer</div>
+      <div class="subtopic" onclick="mostrarSub('alema')">🇩🇪 Tribunal Alemão</div>
+      <div class="subtopic" onclick="mostrarSub('stf')">🇧🇷 STF - Retrocesso</div>
+    </div>
+
+    <div id="riggs" class="subexplicacao">
+      <h4>⚖️ RIGGS VS. PALMER (1889)</h4>
+      <div class="jurisprudencia-box">
+        <p><strong>Caso:</strong> Conflito entre direito à herança e direito à vida.</p>
+        <p><strong>Fatos:</strong> Herdeiro assassina testador para receber herança.</p>
+        <p><strong>Decisão:</strong> Tribunal de Nova York impediu assassino de receber herança.</p>
+        <p><strong>Princípio:</strong> Ninguém pode se beneficiar de próprio ilícito.</p>
+      </div>
+    </div>
+
+    <div id="alema" class="subexplicacao">
+      <h4>🇩🇪 TRIBUNAL FEDERAL ALEMÃO</h4>
+      <div class="jurisprudencia-box">
+        <p><strong>Princípio:</strong> Prevalência de um princípio não deve esvaziar o outro.</p>
+        <p><strong>Ponderação:</strong> Decisão deve ser menos onerosa possível à parte derrotada.</p>
+        <p><strong>Base:</strong> Proporcionalidade e razoabilidade nas soluções de conflitos.</p>
+      </div>
+    </div>
+
+    <div id="stf" class="subexplicacao">
+      <h4>🇧🇷 STF - PROIBIÇÃO AO RETROCESSO</h4>
+      <div class="jurisprudencia-box">
+        <p><strong>Entendimento:</strong> Admite alteração de matérias do art. 60, §4º desde que não tenda a abolir preceitos resguardados.</p>
+        <p><strong>Exemplo:</strong> Reforma da previdência com taxação de inativos.</p>
+        <p><strong>Princípio:</strong> Mitigação de direitos dentro de razoabilidade e ponderação.</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+  <!-- SEÇÃO: DISPOSITIVOS LEGAIS -->
+  <div id="dispositivos" class="explicacao">
+    <h3>📊 DISPOSITIVOS LEGAIS RELEVANTES</h3>
+    
+    <div class="subtopics-grid">
+      <div class="subtopic" onclick="mostrarSub('art60')">📑 Art. 60, CF/88</div>
+      <div class="subtopic" onclick="mostrarSub('art5')">📜 Art. 5º, §2º, CF/88</div>
+      <div class="subtopic" onclick="mostrarSub('art165')">💰 Art. 165, §2º, CF/88</div>
+      <div class="subtopic" onclick="mostrarSub('art242')">🏫 Art. 242, §2º, CF/88</div>
+    </div>
+
+    <div id="art60" class="subexplicacao">
+      <h4>📑 ARTIGO 60 DA CF/88</h4>
+      <div class="conceito-box">
+        <p><strong>Processo de Emenda Constitucional:</strong> Estabelece o procedimento para reforma da Constituição.</p>
+        <p><strong>Quórum:</strong> 3/5 dos membros de cada Casa, em dois turnos de votação.</p>
+        <p><strong>§4º - Cláusulas Pétreas:</strong> Matérias imutáveis que não podem ser abolidas.</p>
+        <p><strong>Importância:</strong> Base da rigidez constitucional brasileira.</p>
+      </div>
+    </div>
+
+    <div id="art5" class="subexplicacao">
+      <h4>📜 ARTIGO 5º, §2º DA CF/88</h4>
+      <div class="conceito-box">
+        <p><strong>Conteúdo:</strong> "Os direitos e garantias expressos nesta Constituição não excluem outros decorrentes do regime e dos princípios por ela adotados".</p>
+        <p><strong>Significado:</strong> Base legal para os direitos fundamentais atípicos.</p>
+        <p><strong>Ampliação:</strong> Reconhecimento de direitos não expressamente enumerados.</p>
+      </div>
+    </div>
+
+    <div id="art165" class="subexplicacao">
+      <h4>💰 ARTIGO 165, §2º DA CF/88</h4>
+      <div class="conceito-box">
+        <p><strong>Lei de Diretrizes Orçamentárias (LDO):</strong> Define metas e prioridades da administração pública federal.</p>
+        <p><strong>Função:</strong> Instrumento para concretização dos direitos sociais.</p>
+        <p><strong>Relacionamento:</strong> Reserva do possível vs mínimo existencial.</p>
+      </div>
+    </div>
+
+    <div id="art242" class="subexplicacao">
+      <h4>🏫 ARTIGO 242, §2º DA CF/88</h4>
+      <div class="conceito-box">
+        <p><strong>Conteúdo:</strong> "O Colégio Pedro II, localizado na cidade do Rio de Janeiro, será mantido na órbita federal".</p>
+        <p><strong>Exemplo:</strong> Norma que demonstra caráter analítico da CF/88.</p>
+        <p><strong>Crítica:</strong> Assunto que poderia ser disciplinado em lei ordinária.</p>
+      </div>
+    </div>
+
+    <button class="btn-voltar" onclick="ocultarTudo()">⬅️ Voltar ao Menu Principal</button>
+  </div>
+
+</div>
+
+<script>
+function mostrar(id) {
+  // Oculta todas as seções principais
+  var caixas = document.getElementsByClassName('explicacao');
+  for (var i = 0; i < caixas.length; i++) {
+    caixas[i].style.display = 'none';
+  }
+  
+  // Oculta todas as subseções
+  var subcaixas = document.getElementsByClassName('subexplicacao');
+  for (var i = 0; i < subcaixas.length; i++) {
+    subcaixas[i].style.display = 'none';
+  }
+  
+  // Mostra a seção selecionada
+  document.getElementById(id).style.display = 'block';
+}
+
+function mostrarSub(id) {
+  // Oculta todas as subseções
+  var subcaixas = document.getElementsByClassName('subexplicacao');
+  for (var i = 0; i < subcaixas.length; i++) {
+    subcaixas[i].style.display = 'none';
+  }
+  
+  // Mostra a subseção selecionada
+  document.getElementById(id).style.display = 'block';
+}
+
+function ocultarTudo() {
+  // Oculta todas as seções principais
+  var caixas = document.getElementsByClassName('explicacao');
+  for (var i = 0; i < caixas.length; i++) {
+    caixas[i].style.display = 'none';
+  }
+  
+  // Oculta todas as subseções
+  var subcaixas = document.getElementsByClassName('subexplicacao');
+  for (var i = 0; i < subcaixas.length; i++) {
+    subcaixas[i].style.display = 'none';
+  }
+}
+
+// Inicialização: oculta tudo no carregamento
+window.onload = ocultarTudo;
+</script>
+
+</body>
+</html>
