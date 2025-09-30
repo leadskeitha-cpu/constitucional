@@ -338,6 +338,17 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
         .btn:disabled {
             background: var(--gray);
             cursor: not-allowed;
@@ -507,6 +518,9 @@
             <button class="btn btn-warning" onclick="finalizarSimulado()" id="btn-finalizar">
                 <i class="fas fa-flag-checkered"></i> Finalizar
             </button>
+            <button class="btn btn-info" onclick="window.open('https://leadskeitha-cpu.github.io/constitucional/mapa.html', '_blank')">
+                <i class="fas fa-home"></i> Menu Inicial
+            </button>
         </div>
 
         <!-- Resultado Final -->
@@ -531,6 +545,9 @@
                 </div>
                 <button class="btn btn-primary" onclick="reiniciarSimulado()" style="margin-top: 20px;">
                     <i class="fas fa-redo"></i> Fazer Novamente
+                </button>
+                <button class="btn btn-info" onclick="window.open('https://leadskeitha-cpu.github.io/constitucional/mapa.html', '_blank')" style="margin-top: 10px;">
+                    <i class="fas fa-home"></i> Menu Inicial
                 </button>
             </div>
         </div>
