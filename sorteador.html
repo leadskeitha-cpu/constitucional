@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador GRUPO KEITHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-gold: #C9A961;
+            --dark-gold: #8B7335;
+            --light-gold: #F4E4C1;
+            --white: #ffffff;
+            --dark: #2C2416;
+            --success: #28a745;
+            --danger: #dc3545;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1510 0%, #3d3020 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Animação de partículas douradas no fundo */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--primary-gold) 100%);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--white);
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header h1 {
+            color: var(--white);
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: var(--light-gold);
+            font-size: 18px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px var(--shadow);
+            border: 3px solid var(--light-gold);
+        }
+
+        .card h2 {
+            color: var(--dark-gold);
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid var(--primary-gold);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gold);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 10px rgba(201, 169, 97, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--dark-gold) 100%);
+            color: var(--white);
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(201, 169, 97, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(201, 169, 97, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: var(--white);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .participants-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .participant-item {
+            background: var(--white);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .participant-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-gold);
+            font-weight: 700;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--light-gold) 0%, var(--white) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark-gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--dark);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Área do Sorteio */
+        .draw-area {
+            grid-column: 1 / -1;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px var(--shadow);
+            border: 3px solid var(--light-gold);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .draw-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(201, 169, 97, 0.05) 100%);
+            pointer-events: none;
+        }
+
+        .roulette-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .roulette-name {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--dark-gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            background: var(--light-gold);
+            border-radius: 15px;
+            border: 3px solid var(--primary-gold);
+            animation: rouletteSpin 0.1s linear infinite;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        @keyframes rouletteSpin {
+            0% { transform: translateY(-5px); }
+            50% { transform: translateY(5px); }
+            100% { transform: translateY(-5px); }
+        }
+
+        .winner-container {
+            display: none;
+            animation: winnerAppear 1s ease-out;
+        }
+
+        @keyframes winnerAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .winner-trophy {
+            font-size: 120px;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            animation: trophyBounce 1s infinite;
+        }
+
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .winner-name {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--dark-gold);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--light-gold) 0%, var(--white) 100%);
+            border-radius: 20px;
+            border: 5px solid var(--primary-gold);
+        }
+
+        .winner-subtitle {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-gold);
+            position: absolute;
+            animation: confettiFall 3s linear;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .winner-name {
+                font-size: 42px;
+            }
+
+            .winner-trophy {
+                font-size: 80px;
+            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gold);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas flutuantes -->
+    <script>
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <div class="container">
+        <!-- Cabeçalho -->
+        <div class="header">
+            <div class="logo-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='goldGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23F4E4C1'/%3E%3Cstop offset='50%25' style='stop-color:%23C9A961'/%3E%3Cstop offset='100%25' style='stop-color:%238B7335'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='95' fill='url(%23goldGrad)'/%3E%3Cpath d='M100,30 Q80,50 70,70 Q60,90 65,110 Q70,130 85,140 Q100,150 100,160 L100,160 Q100,150 115,140 Q130,130 135,110 Q140,90 130,70 Q120,50 100,30 Z' fill='%23F4E4C1' opacity='0.3'/%3E%3Ccircle cx='70' cy='60' r='8' fill='%23F4E4C1'/%3E%3Ccircle cx='85' cy='50' r='10' fill='%23F4E4C1'/%3E%3Ccircle cx='100' cy='45' r='12' fill='%23FFF'/%3E%3Ccircle cx='115' cy='50' r='10' fill='%23F4E4C1'/%3E%3Ccircle cx='130' cy='60' r='8' fill='%23F4E4C1'/%3E%3Ccircle cx='60' cy='80' r='6' fill='%23F4E4C1'/%3E%3Ccircle cx='140' cy='80' r='6' fill='%23F4E4C1'/%3E%3Ctext x='100' y='185' font-size='24' font-weight='bold' text-anchor='middle' fill='%232C2416' font-family='Arial, sans-serif'%3EKEITHA%3C/text%3E%3C/svg%3E" alt="Logo Grupo Keitha" class="logo">
+            </div>
+            <h1>GRUPO KEITHA</h1>
+            <p>Sorteador Profissional de Comentários do Instagram</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Configurações -->
+            <div class="card">
+                <h2><i class="fas fa-cog"></i> Configurações do Sorteio</h2>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-link"></i> Link da Publicação do Instagram (opcional)</label>
+                    <input type="url" id="instagram-link" placeholder="https://www.instagram.com/p/...">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-comments"></i> Cole os Comentários Aqui *</label>
+                    <textarea id="comments-input" placeholder="Cole os comentários do Instagram aqui, um por linha.&#10;Exemplo:&#10;@usuario1 Participando!&#10;@usuario2 Quero ganhar! @amigo1&#10;@usuario3 #sorteio"></textarea>
+                </div>
+
+                <div class="info-box">
+                    <strong><i class="fas fa-info-circle"></i> Como obter os comentários?</strong>
+                    1. Abra a publicação no Instagram<br>
+                    2. Copie os comentários (com @usuario)<br>
+                    3. Cole aqui no formato: @usuario comentário<br>
+                    4. Um comentário por linha
+                </div>
+
+                <div class="form-group">
+                    <h3 style="color: var(--dark-gold); font-size: 18px; margin: 20px 0 15px 0;">
+                        <i class="fas fa-filter"></i> Regras de Participação
+                    </h3>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="require-keyword">
+                        <label for="require-keyword">Exigir palavra-chave específica</label>
+                    </div>
+
+                    <div class="form-group" id="keyword-input-group" style="display: none;">
+                        <input type="text" id="keyword" placeholder="Digite a palavra-chave (ex: #sorteio, participando)">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="require-tag">
+                        <label for="require-tag">Exigir marcação de amigos</label>
+                    </div>
+
+                    <div class="form-group" id="tag-count-group" style="display: none;">
+                        <label>Mínimo de amigos marcados:</label>
+                        <input type="number" id="min-tags" value="1" min="1" max="10">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remove-duplicates" checked>
+                        <label for="remove-duplicates">Remover participantes duplicados</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="processComments()">
+                    <i class="fas fa-check-circle"></i> Processar Comentários
+                </button>
+
+                <button class="btn btn-secondary" onclick="clearAll()">
+                    <i class="fas fa-trash"></i> Limpar Tudo
+                </button>
+            </div>
+
+            <!-- Participantes -->
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Participantes Válidos</h2>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="total-comments">0</span>
+                        <span class="stat-label">Comentários</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="valid-participants">0</span>
+                        <span class="stat-label">Válidos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="invalid-participants">0</span>
+                        <span class="stat-label">Inválidos</span>
+                    </div>
+                </div>
+
+                <div class="participants-list" id="participants-list">
+                    <p style="text-align: center; color: #6c757d; padding: 40px 20px;">
+                        <i class="fas fa-user-friends" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                        Aguardando processamento dos comentários...
+                    </p>
+                </div>
+
+                <button class="btn btn-primary" onclick="startDraw()" id="draw-btn" disabled style="margin-top: 20px;">
+                    <i class="fas fa-trophy"></i> Sortear Ganhador
+                </button>
+            </div>
+
+            <!-- Área do Sorteio -->
+            <div class="draw-area" id="draw-area">
+                <div id="initial-message">
+                    <i class="fas fa-gift" style="font-size: 100px; color: var(--primary-gold); margin-bottom: 20px;"></i>
+                    <h2 style="color: var(--dark-gold); font-size: 32px; margin-bottom: 15px;">
+                        Pronto para Sortear?
+                    </h2>
+                    <p style="color: var(--dark); font-size: 18px;">
+                        Configure as regras, adicione os comentários e clique em "Sortear Ganhador"!
+                    </p>
+                </div>
+
+                <div id="roulette-display" style="display: none;">
+                    <h3 style="color: var(--dark-gold); font-size: 28px; margin-bottom: 20px;">
+                        🎰 Sorteando...
+                    </h3>
+                    <div class="roulette-container">
+                        <div class="roulette-name" id="roulette-name">@participante</div>
+                    </div>
+                </div>
+
+                <div id="winner-display" class="winner-container">
+                    <div class="winner-trophy">🏆</div>
+                    <div class="winner-subtitle">🎉 PARABÉNS! 🎉</div>
+                    <div class="winner-name" id="winner-name">@ganhador</div>
+                    <p style="font-size: 20px; color: var(--dark); margin-bottom: 30px;">
+                        É o grande vencedor do sorteio!
+                    </p>
+                    <button class="btn btn-primary" onclick="startDraw()" style="max-width: 400px;">
+                        <i class="fas fa-redo"></i> Sortear Novamente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let participants = [];
+        let validParticipants = [];
+
+        // Toggle de inputs condicionais
+        document.getElementById('require-keyword').addEventListener('change', function() {
+            document.getElementById('keyword-input-group').style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('require-tag').addEventListener('change', function() {
+            document.getElementById('tag-count-group').style.display = this.checked ? 'block' : 'none';
+        });
+
+        function processComments() {
+            const commentsText = document.getElementById('comments-input').value.trim();
+            
+            if (!commentsText) {
+                alert('⚠️ Por favor, cole os comentários do Instagram!');
+                return;
+            }
+
+            const requireKeyword = document.getElementById('require-keyword').checked;
+            const keyword = document.getElementById('keyword').value.toLowerCase().trim();
+            const requireTag = document.getElementById('require-tag').checked;
+            const minTags = parseInt(document.getElementById('min-tags').value);
+            const removeDuplicates = document.getElementById('remove-duplicates').checked;
+
+            // Processar comentários
+            const lines = commentsText.split('\n').filter(line => line.trim());
+            participants = [];
+            const userSet = new Set();
+
+            lines.forEach((line, index) => {
+                const match = line.match(/@(\w+)/);
+                if (match) {
+                    const username = match[1];
+                    const comment = line.toLowerCase();
+                    
+                    let isValid = true;
+                    let reason = '';
+
+                    // Verificar palavra-chave
+                    if (requireKeyword && keyword && !comment.includes(keyword)) {
+                        isValid = false;
+                        reason = `Não contém "${keyword}"`;
+                    }
+
+                    // Verificar marcações
+                    if (requireTag) {
+                        const tags = (line.match(/@\w+/g) || []).length - 1; // -1 para não contar o próprio usuário
+                        if (tags < minTags) {
+                            isValid = false;
+                            reason = `Marcou apenas ${tags} amigo(s), mínimo ${minTags}`;
+                        }
+                    }
+
+                    // Verificar duplicados
+                    if (removeDuplicates && userSet.has(username)) {
+                        isValid = false;
+                        reason = 'Participação duplicada';
+                    }
+
+                    if (isValid) {
+                        userSet.add(username);
+                    }
+
+                    participants.push({
+                        username: username,
+                        comment: line,
+                        valid: isValid,
+                        reason: reason
+                    });
+                }
+            });
+
+            validParticipants = participants.filter(p => p.valid);
+
+            // Atualizar estatísticas
+            document.getElementById('total-comments').textContent = participants.length;
+            document.getElementById('valid-participants').textContent = validParticipants.length;
+            document.getElementById('invalid-participants').textContent = participants.length - validParticipants.length;
+
+            // Exibir participantes
+            displayParticipants();
+
+            // Habilitar botão de sorteio
+            document.getElementById('draw-btn').disabled = validParticipants.length === 0;
+
+            if (validParticipants.length === 0) {
+                alert('⚠️ Nenhum participante válido encontrado com as regras configuradas!');
+            } else {
+                alert(`✅ ${validParticipants.length} participante(s) válido(s) encontrado(s)!`);
+            }
+        }
+
+        function displayParticipants() {
+            const list = document.getElementById('participants-list');
+            
+            if (validParticipants.length === 0) {
+                list.innerHTML = `
+                    <p style="text-align: center; color: #dc3545; padding: 40px 20px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                        Nenhum participante válido encontrado!
+                    </p>
+                `;
+                return;
+            }
+
+            list.innerHTML = validParticipants.map((p, index) => `
+                <div class="participant-item">
+                    <div class="participant-icon">${index + 1}</div>
+                    <div style="flex: 1;">
+                        <strong style="color: var(--dark-gold);">@${p.username}</strong><br>
+                        <small style="color: #6c757d;">${p.comment.substring(0, 50)}${p.comment.length > 50 ? '...' : ''}</small>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: var(--success); font-size: 20px;"></i>
+                </div>
+            `).join('');
+        }
+
+        function startDraw() {
+            if (validParticipants.length === 0) {
+                alert('⚠️ Não há participantes válidos para sortear!');
+                return;
+            }
+
+            // Esconder mensagens anteriores
+            document.getElementById('initial-message').style.display = 'none';
+            document.getElementById('winner-display').style.display = 'none';
+            document.getElementById('roulette-display').style.display = 'block';
+
+            const rouletteName = document.getElementById('roulette-name');
+            let currentIndex = 0;
+            let speed = 50;
+            let iterations = 0;
+            const maxIterations = 60; // Mais iterações para mais suspense
+
+            // Animação de roleta
+            const interval = setInterval(() => {
+                currentIndex = Math.floor(Math.random() * validParticipants.length);
+                rouletteName.textContent = `@${validParticipants[currentIndex].username}`;
+                
+                iterations++;
+                
+                // Desacelerar progressivamente
+                if (iterations > maxIterations * 0.6) {
+                    speed += 10;
+                }
+                
+                if (iterations >= maxIterations) {
+                    clearInterval(interval);
+                    setTimeout(() => showWinner(), 500);
+                }
+            }, speed);
+        }
+
+        function showWinner() {
+            // Escolher ganhador aleatório
+            const winner = validParticipants[Math.floor(Math.random() * validParticipants.length)];
+            
+            // Esconder roleta
+            document.getElementById('roulette-display').style.display = 'none';
+            
+            // Mostrar ganhador
+            document.getElementById('winner-name').textContent = `@${winner.username}`;
+            document.getElementById('winner-display').style.display = 'block';
+            
+            // Criar confetes
+            createConfetti();
+            
+            // Tocar som de vitória (simulado com vibração em mobile)
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#C9A961', '#8B7335', '#F4E4C1', '#FFD700', '#FFA500'];
+            const drawArea = document.getElementById('draw-area');
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    drawArea.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function clearAll() {
+            if (confirm('⚠️ Tem certeza que deseja limpar tudo?')) {
+                document.getElementById('comments-input').value = '';
+                document.getElementById('instagram-link').value = '';
+                document.getElementById('keyword').value = '';
+                document.getElementById('require-keyword').checked = false;
+                document.getElementById('require-tag').checked = false;
+                document.getElementById('min-tags').value = '1';
+                document.getElementById('keyword-input-group').style.display = 'none';
+                document.getElementById('tag-count-group').style.display = 'none';
+                
+                participants = [];
+                validParticipants = [];
+                
+                document.getElementById('total-comments').textContent = '0';
+                document.getElementById('valid-participants').textContent = '0';
+                document.getElementById('invalid-participants').textContent = '0';
+                
+                document.getElementById('participants-list').innerHTML = `
+                    <p style="text-align: center; color: #6c757d; padding: 40px 20px;">
+                        <i class="fas fa-user-friends" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                        Aguardando processamento dos comentários...
+                    </p>
+                `;
+                
+                document.getElementById('draw-btn').disabled = true;
+                document.getElementById('initial-message').style.display = 'block';
+                document.getElementById('roulette-display').style.display = 'none';
+                document.getElementById('winner-display').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
