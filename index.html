@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GRUPO KEITHA • Sorteador de Comentários</title>
+    <meta name="description" content="Sorteador de comentários para Instagram com filtros de palavra‑chave e marcações. Marca: GRUPO KEITHA."/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./sorteador.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="app-header">
+        <div class="brand">
+          <img id="brandLogo" src="./logo.png" alt="Logo GRUPO KEITHA" onerror="this.style.display='none'; document.getElementById('brandText').style.display='block'"/>
+          <div id="brandText" class="brand-text" style="display:none">GRUPO KEITHA</div>
+        </div>
+        <div class="title">
+          <h1>Sorteador de Comentários</h1>
+          <p class="subtitle">Analise comentários de um post do Instagram e realize sorteios com regras de palavra‑chave e marcações.</p>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="card input-card">
+          <h2>1) Carregar comentários</h2>
+          <div class="inputs-grid">
+            <div class="input-block">
+              <label for="postUrl">Link do post do Instagram</label>
+              <div class="row">
+                <input id="postUrl" type="url" placeholder="https://www.instagram.com/p/XXXXX/" />
+                <button id="btnFetch" class="btn primary">Buscar (API)</button>
+              </div>
+              <details class="tip">
+                <summary>Usar API do Instagram (opcional)</summary>
+                <div class="tip-body">
+                  <p>Para buscar os comentários automaticamente, informe um <strong>Access Token</strong> válido (Instagram Graph API).<br/> O token não é enviado a servidores terceiros, fica apenas no seu navegador.</p>
+                  <div class="row">
+                    <input id="accessToken" type="password" placeholder="IG_USER_ACCESS_TOKEN ou APP_ID|APP_SECRET para o oEmbed"/>
+                    <button id="btnSaveToken" class="btn">Salvar token</button>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="input-block">
+              <label for="rawPaste">Colar comentários (um por linha ou no formato usuário: comentário)</label>
+              <textarea id="rawPaste" rows="6" placeholder="usuario1: comentário\nusuario2: outro comentário"></textarea>
+              <div class="row row-right">
+                <button id="btnParsePaste" class="btn">Importar colado</button>
+              </div>
+            </div>
+
+            <div class="input-block">
+              <label>Upload de arquivo (CSV ou JSON)</label>
+              <input id="fileInput" type="file" accept=".csv,.json"/>
+              <div class="hint">CSV esperado com cabeçalhos: <code>username,comment</code>. JSON pode ser uma lista de objetos { username, text }.</div>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat"><span id="statTotal">0</span><small>Carregados</small></div>
+            <div class="stat"><span id="statElegiveis">0</span><small>Elegíveis</small></div>
+            <div class="stat"><span id="statExcluidos">0</span><small>Filtrados</small></div>
+            <div class="spacer"></div>
+            <button id="btnLimpar" class="btn subtle">Limpar</button>
+          </div>
+        </section>
+
+        <section class="card rules-card">
+          <h2>2) Regras do sorteio</h2>
+          <div class="rules-grid">
+            <div class="rule">
+              <label for="keyword">Palavra‑chave (opcional)</label>
+              <input id="keyword" type="text" placeholder="ex.: quero ganhar, ouro" />
+              <label class="checkbox"><input type="checkbox" id="matchAll"/> Palavras devem aparecer todas (em vez de qualquer)</label>
+              <label class="checkbox"><input type="checkbox" id="caseSensitive"/> Diferenciar maiúsculas/minúsculas</label>
+            </div>
+            <div class="rule">
+              <label for="minMentions">Marcou amigos?</label>
+              <div class="row">
+                <input id="minMentions" type="number" min="0" step="1" value="0" />
+                <span>mínimo de @menções</span>
+              </div>
+              <label class="checkbox"><input type="checkbox" id="distinctMentions" checked/> Contar menções distintas</label>
+            </div>
+            <div class="rule">
+              <label for="maxEntries">Limite por usuário</label>
+              <div class="row">
+                <input id="maxEntries" type="number" min="1" step="1" value="1" />
+                <span>entradas (1 = sem duplicatas)</span>
+              </div>
+              <label for="blacklist">Lista de exclusão (um usuário por linha)</label>
+              <textarea id="blacklist" rows="3" placeholder="usuario_banido\noutro_usuario"></textarea>
+            </div>
+          </div>
+          <div class="row row-right">
+            <button id="btnAplicarRegras" class="btn">Aplicar regras</button>
+          </div>
+        </section>
+
+        <section class="card draw-card">
+          <h2>3) Sortear</h2>
+          <div class="draw-grid">
+            <div class="wheel">
+              <div class="wheel-inner" id="wheelInner">
+                <div class="placeholder">Carregue comentários e aplique as regras para sortear</div>
+              </div>
+            </div>
+            <div class="draw-controls">
+              <div class="eligible-list" id="eligibleList"></div>
+              <div class="row">
+                <button id="btnSortear" class="btn primary big">SORTEAR</button>
+              </div>
+              <div id="winnerBox" class="winner-box hidden">
+                <div class="winner-title">Vencedor</div>
+                <div class="winner-user" id="winnerUser">—</div>
+                <div class="winner-comment" id="winnerComment">—</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card winners-card">
+          <h2>Resultados</h2>
+          <div class="row">
+            <button id="btnExportCsv" class="btn">Exportar CSV</button>
+            <button id="btnExportJson" class="btn">Exportar JSON</button>
+            <button id="btnClearResults" class="btn subtle">Limpar resultados</button>
+          </div>
+          <div id="resultsList" class="results-list"></div>
+        </section>
+
+        <footer class="footer">
+          <div>
+            <strong>GRUPO KEITHA</strong> • Sorteador de Comentários
+          </div>
+          <div class="footnote">Este projeto usa apenas o seu navegador. O uso da API do Instagram requer token válido do próprio usuário.</div>
+        </footer>
+      </main>
+    </div>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="loader">
+        <div class="spinner"></div>
+        <div id="loadingText">Carregando…</div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.1/dist/confetti.browser.min.js"></script>
+    <script src="./sorteador.js" type="module"></script>
+  </body>
+</html>
